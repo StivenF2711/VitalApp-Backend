@@ -83,9 +83,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'aVbmWecUVtuXkLNPpFatONCBUpwjwSpm',
+        'PASSWORD': 'tbAYnelJBJZJdxhklXQmBNWaxKaWBzYA',
         'HOST': 'yamanote.proxy.rlwy.net',  # o la IP de tu servidor si no es local
-        'PORT': '53570',       # el puerto por defecto de PostgreSQL
+        'PORT': '12046',       # el puerto por defecto de PostgreSQL
     }
 }
 

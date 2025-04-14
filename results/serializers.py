@@ -1,8 +1,10 @@
+# results/serializers.py
+
 from rest_framework import serializers
 from .models import Result
-
+from core.models import Core
 
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = "__all__"
+        fields = '__all__'

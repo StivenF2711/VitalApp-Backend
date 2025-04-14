@@ -1,12 +1,13 @@
-from django.db import models
-from django.contrib.auth.models import User
+# results/models.py
 
+from django.db import models
+from core.models import Core  # Importa tu modelo Core
 
 class Result(models.Model):
-    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Result")
+    patient = models.ForeignKey(Core, on_delete=models.CASCADE, related_name="result")
     test_name = models.CharField(max_length=100)
     result_value = models.TextField()
     date = models.DateField()
 
     def __str__(self):
-        return f"{self.test_name} de {self.patient.username} - {self.date}"
+        return f"{self.test_name} de {self.patient} - {self.date}"
