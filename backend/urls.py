@@ -18,5 +18,10 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path(
+        "api/appointments/", include("appointments.urls")
+    ),  # Agregamos las rutas de citas
+    path("api/alerts/", include("alerts.urls")),  # Agregamos las rutas de alertas
+    path("api/results/", include("results.urls")),  # Agregamos las rutas de resultados
 ]
