@@ -24,4 +24,5 @@ urlpatterns = [
     ),  # Agregamos las rutas de citas
     path("api/alerts/", include("alerts.urls")),  # Agregamos las rutas de alertas
     path("api/results/", include("results.urls")),  # Agregamos las rutas de resultados
+    path("api/core/", include("core.urls")),  # Agregamos las rutas de core
 ]
