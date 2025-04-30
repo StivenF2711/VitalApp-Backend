@@ -1,10 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Core
 
 
 class Appointments(models.Model):
     patient = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="appointments"
+        Core, on_delete=models.CASCADE, related_name="appointments"
     )
     date = models.DateTimeField()
     reason = models.TextField()
