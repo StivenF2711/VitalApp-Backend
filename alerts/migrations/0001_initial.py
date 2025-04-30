@@ -14,12 +14,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Appointments',
+            name='Alert',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField()),
-                ('reason', models.TextField()),
-                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='appointments', to='core.usuarios')),
+                ('message', models.TextField()),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('is_read', models.BooleanField(default=True)),
+                ('patients', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='alerts', to='core.usuarios')),
             ],
         ),
     ]
