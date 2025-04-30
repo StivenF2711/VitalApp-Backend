@@ -1,54 +1,40 @@
-from core.models import Core
-from results.models import Result
 from django.test import TestCase
+from datetime import date
+from core.models import Usuarios
+from results.models import Result
 
 class ResultModelTest(TestCase):
+
+    def setUp(self):
+        self.usuario = Usuarios.objects.create(
+            first_name="María",
+            last_name="López",
+            birth_date=date(1992, 6, 5),
+            gender="F",
+            email="maria.lopez@example.com"
+        )
+        self.resultado = Result.objects.create(
+            patient=self.usuario,
+            test_name="Glucosa en sangre",
+            result_value="120 mg/dL",
+            date=date(2025, 4, 30)
+        )
+
     def test_result_creation(self):
-        # Crear un objeto Core directamente
-        core = Core.objects.create(
-            first_name="Juan",
-            last_name="Perez",
-            birth_date="1990-01-01",
-            gender="M",
-            email="juan.perez@example.com",
-            phone_number="123456789",
-            address="Calle Ficticia 123"
-        )
+        self.assertEqual(Result.objects.count(), 1)
+        self.assertEqual(self.resultado.patient, self.usuario)
+        self.assertEqual(self.resultado.test_name, "Glucosa en sangre")
+        self.assertEqual(self.resultado.result_value, "120 mg/dL")
+        self.assertEqual(self.resultado.date, date(2025, 4, 30))
 
-        # Crear el resultado y asignar el objeto Core como paciente
-        result = Result.objects.create(
-            patient=core,
-            test_name="Colesterol",
-            result_value="Alto",
-            date="2025-04-13"
-        )
+    def test_result_str_representation(self):
+        expected_str = f"Glucosa en sangre de María López - 2025-04-30"
+        self.assertEqual(str(self.resultado), expected_str)
 
-        # Verifica que el resultado se creó correctamente
-        self.assertEqual(result.patient.first_name, "Juan")
-        self.assertEqual(result.patient.last_name, "Perez")
-        self.assertEqual(result.patient.email, "juan.perez@example.com")
-        self.assertEqual(result.test_name, "Colesterol")
-        self.assertEqual(result.result_value, "Alto")
-        self.assertEqual(str(result.date), "2025-04-13")
+    def test_user_result_reverse_relation(self):
+        resultados = self.usuario.result.all()
+        self.assertIn(self.resultado, resultados)
 
-    def test_string_representation(self):
-        # Crear un objeto Core directamente
-        core = Core.objects.create(
-            first_name="Juan",
-            last_name="Perez",
-            birth_date="1990-01-01",
-            gender="M",
-            email="juan.perez@example.com",
-            phone_number="123456789",
-            address="Calle Ficticia 123"
-        )
-
-        # Crear el resultado
-        result = Result.objects.create(
-            patient=core,
-            test_name="Colesterol",
-            result_value="Alto",
-            date="2025-04-13"
-        )
-
-        self.assertEqual(str(result), "Colesterol de Juan Perez - 2025-04-13")
+    def test_delete_user_cascades_result(self):
+        self.usuario.delete()
+        self.assertEqual(Result.objects.count(), 0)
