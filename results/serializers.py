@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 from .models import Result
-from core.models import Core
+from core.models import Usuarios
 
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
